@@ -97,27 +97,4 @@ public class ElasticSearch extends AbstractElasticSearch {
         return client.exists(request, DEFAULT);
 
     }
-
-    protected void checkIndexResponse(IndexResponse indexResponse) {
-        String index = indexResponse.getIndex();
-        String id = indexResponse.getId();
-
-        if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
-            System.out.println("index: " + index + " id: " + id + "created!");
-        } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
-            System.out.println("index: " + index + " id: " + id + "updated!");
-        }
-
-        ReplicationResponse.ShardInfo shardInfo = indexResponse.getShardInfo();
-        if (shardInfo.getTotal() != shardInfo.getSuccessful()) {
-            // TODO: ???
-        }
-        if (shardInfo.getFailed() > 0) {
-            for (ReplicationResponse.ShardInfo.Failure failure :
-                    shardInfo.getFailures()) {
-                String reason = failure.reason();
-                // TODO: ???
-            }
-        }
-    }
 }
