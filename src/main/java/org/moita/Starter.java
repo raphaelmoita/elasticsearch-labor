@@ -3,6 +3,7 @@ package org.moita;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.moita.domain.Book;
@@ -65,10 +66,10 @@ public class Starter {
                     .build();
 
             UpdateResponse updateResponse = persistence.update(harryPotterBookIndexResp.getId(), gson.toJson(updateHarryPotterBook));
-
             responseHandler.checkResponse(updateResponse);
 
-            // TODO: delete
+            DeleteResponse deleteResponse = persistence.delete(updateResponse.getId());
+            responseHandler.checkResponse(deleteResponse);
 
             // TODO: get by version
 
